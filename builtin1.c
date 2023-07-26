@@ -1,115 +1,70 @@
 #include "shell.h"
 
+
 /**
- * _myhistory - displays the history list, one command by line, preceded
- *              with line numbers, starting at 0.
+ * _mycd - Changes the current working directory of the process.
  * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: Always 0
+ *        a constant function prototype.
+ * Return: Always 0
  */
-int _myhistory(info_t *info)
+
+int _mycd(info_t *info)
 {
-	print_list(info->history);
-	return (0);
+    char *dir;
+    char buffer[READ_BUF_SIZE]; // Use READ_BUF_SIZE defined in shell.h
+    int chdir_ret;
+
+    // If no argument is given, change directory to the home directory
+    if (info->argv[1] == NULL)
+    {
+        _puts(_getenv(info, "HOME=")), _putchar('\n');
+        chdir_ret = chdir(_getenv(info, "HOME="));
+    }
+    else if (_strcmp(info->argv[1], "-") == 0)
+    {
+        // If the argument is "-", change directory to the previous working directory
+        _puts(_getenv(info, "OLDPWD=")), _putchar('\n');
+        chdir_ret = chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+    }
+    else
+    {
+        // Change directory to the provided argument
+        chdir_ret = chdir(info->argv[1]);
+    }
+
+    if (chdir_ret == -1)
+    {
+        // If chdir returns -1 (error), print an error message
+        print_error(info, "can't cd to ");
+        _eputs(info->argv[1]), _eputchar('\n');
+    }
+    else
+    {
+        // Update environment variables PWD and OLDPWD
+        _setenv(info, "OLDPWD", _getenv(info, "PWD="));
+        _setenv(info, "PWD", getcwd(buffer, READ_BUF_SIZE));
+    }
+
+    return 0;
 }
 
-/**
- * unset_alias - sets alias to string
- * @info: parameter struct
- * @str: the string alias
- *
- * Return: Always 0 on success, 1 on error
- */
-int unset_alias(info_t *info, char *str)
-{
-	char *p, c;
-	int ret;
-
-	p = _strchr(str, '=');
-	if (!p)
-		return (1);
-	c = *p;
-	*p = 0;
-	ret = delete_node_at_index(&(info->alias),
-		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
-	*p = c;
-	return (ret);
-}
 
 /**
- * set_alias - sets alias to string
- * @info: parameter struct
- * @str: the string alias
- *
- * Return: Always 0 on success, 1 on error
- */
-int set_alias(info_t *info, char *str)
-{
-	char *p;
-
-	p = _strchr(str, '=');
-	if (!p)
-		return (1);
-	if (!*++p)
-		return (unset_alias(info, str));
-
-	unset_alias(info, str);
-	return (add_node_end(&(info->alias), str, 0) == NULL);
-}
-
-/**
- * print_alias - prints an alias string
- * @node: the alias node
- *
- * Return: Always 0 on success, 1 on error
- */
-int print_alias(list_t *node)
-{
-	char *p = NULL, *a = NULL;
-
-	if (node)
-	{
-		p = _strchr(node->str, '=');
-		for (a = node->str; a <= p; a++)
-		_putchar(*a);
-		_putchar('\'');
-		_puts(p + 1);
-		_puts("'\n");
-		return (0);
-	}
-	return (1);
-}
-
-/**
- * _myalias - mimics the alias builtin (man alias)
+ * _myhelp - Function to display help information.
  * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- *  Return: Always 0
+ *         a constant function prototype.
+ * Return: Always 0
  */
-int _myalias(info_t *info)
+
+int _myhelp(info_t *info)
 {
-	int i = 0;
-	char *p = NULL;
-	list_t *node = NULL;
+    // Display a temporary message that the help function is not yet implemented
+    char **arg_array;
+    arg_array = info->argv;
+    _puts("help call works. Function not yet implemented \n");
 
-	if (info->argc == 1)
-	{
-		node = info->alias;
-		while (node)
-		{
-			print_alias(node);
-			node = node->next;
-		}
-		return (0);
-	}
-	for (i = 1; info->argv[i]; i++)
-	{
-		p = _strchr(info->argv[i], '=');
-		if (p)
-			set_alias(info, info->argv[i]);
-		else
-			print_alias(node_starts_with(info->alias, info->argv[i], '='));
-	}
+    if (0)
+        _puts(*arg_array); // temp att_unused workaround
 
-	return (0);
+    return 0;
 }
