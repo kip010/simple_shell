@@ -5,7 +5,7 @@
  * @info: return info struct and parameter
  * @av: an argument vector from the main()
  *
- * Return: on success 0, on error 1 or error code
+ * Return:on success 0, on error 1 or error code
  */
 int hsh(info_t *info, char **av)
 {
@@ -44,12 +44,12 @@ int hsh(info_t *info, char **av)
 }
 
 /**
- * find_builtin - for finding builtin command
+ * find_builtin - finding builtin command
  * @info: a return info struct and parameter
  *
  * Return: when builtin not found -1,
  *			when builtin executed successfully 0,
- *			when builtin found but not successful 1,
+ *			when builtin found but not successful 1
  *			when builtin signals exit() -2
  */
 int find_builtin(info_t *info)
@@ -86,7 +86,7 @@ int find_builtin(info_t *info)
 void find_cmd(info_t *info)
 {
 	char *path = NULL;
-	int a, k;
+	int a, l;
 
 	info->path = info->argv[0];
 	if (info->linecount_flag == 1)
@@ -94,10 +94,10 @@ void find_cmd(info_t *info)
 		info->line_count++;
 		info->linecount_flag = 0;
 	}
-	for (a = 0, k = 0; info->arg[a]; a++)
+	for (a = 0, l = 0; info->arg[a]; l++)
 		if (!is_delim(info->arg[a], " \t\n"))
-			k++;
-	if (!k)
+			l++;
+	if (!l)
 		return;
 
 	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
@@ -123,7 +123,7 @@ void find_cmd(info_t *info)
  * fork_cmd - forks an executable thread to run a command
  * @info: return info struct and param
  *
- * Return: NULL
+ * Return: null
  */
 void fork_cmd(info_t *info)
 {
@@ -132,7 +132,7 @@ void fork_cmd(info_t *info)
 	child_pid = fork();
 	if (child_pid == -1)
 	{
-		/* TODO: PUT AN ERROR FUNCTION */
+		/* TODO: PUT ERROR FUNCTION */
 		perror("Error:");
 		return;
 	}
@@ -145,7 +145,7 @@ void fork_cmd(info_t *info)
 				exit(126);
 			exit(1);
 		}
-		/* TODO: PUT AN ERROR FUNCTION */
+		/* TODO: PUT ERROR FUNCTION */
 	}
 	else
 	{
@@ -154,7 +154,7 @@ void fork_cmd(info_t *info)
 		{
 			info->status = WEXITSTATUS(info->status);
 			if (info->status == 126)
-				print_error(info, "Permission is denied\n");
+				print_error(info, "Permission denied\n");
 		}
 	}
 }
