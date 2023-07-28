@@ -4,7 +4,7 @@
  * add_node - adds a node to beginning of a list
  * @head: address of head node pointer
  * @str: string field of a node
- * @num: History's node index
+ * @num: node index used by history
  *
  * Return: list size
  */
@@ -35,7 +35,7 @@ list_t *add_node(list_t **head, const char *str, int num)
 
 /**
  * add_node_end - adds a node to the end of a list
- * @head:  address of head node pointer
+ * @head: address of head node pointer
  * @str: string field of a node
  * @num: history's node index
  *
@@ -75,8 +75,8 @@ list_t *add_node_end(list_t **head, const char *str, int num)
 }
 
 /**
- * print_list_str - prints only string element of a linked list list_t
- * @h: first node pointer
+ * print_list_str -prints only string element of a linked list list_t
+ * @h: pointer to first node
  *
  * Return: list size
  */
