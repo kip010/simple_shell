@@ -43,7 +43,7 @@ int is_chain(info_t *info, char *buf, size_t *p)
  * @a: the starting position in buffer
  * @len: length of buffer
  *
- * Return: NULL
+ * Return: Null
  */
 void check_chain(info_t *info, char *buf, size_t *p, size_t a, size_t len)
 {
@@ -141,7 +141,7 @@ int replace_vars(info_t *info)
 
 /**
  * replace_string - for replacing string
- * @old: old string address
+ * @old: for replacing string
  * @new: new string address
  *
  * Return: if replaced 1, else 0
