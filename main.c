@@ -3,7 +3,7 @@
 /**
  * main - main function entry point
  * @ac: argument count
- * @av: argument  vector
+ * @av: argument vector
  *
  * Return: success 0, 1 error 1
  */
@@ -14,8 +14,8 @@ int main(int ac, char **av)
 
 	asm ("mov %1, %0\n\t"
 		"add $3, %0"
-		: "=b" (fd)
-		: "b" (fd));
+		: "=r" (fd)
+		: "r" (fd));
 
 	if (ac == 2)
 	{
