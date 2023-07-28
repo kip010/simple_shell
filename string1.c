@@ -69,7 +69,7 @@ void _puts(char *str)
  * @c: char to print
  *
  * Return: 1 On success
- * -1 On error and errno is set appropriately.
+ * -1 On error and errno is set appropriately
  */
 int _putchar(char c)
 {
