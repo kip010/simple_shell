@@ -1,8 +1,8 @@
 #include "shell.h"
 
 /**
- * list_len - for determining the length of a linked list
- * @h: first node ponter
+ * list_len - - for determining the length of a linked list
+ * @h: pointer to first node
  *
  * Return: list size
  */
@@ -54,11 +54,12 @@ char **list_to_strings(list_t *head)
 	return (strs);
 }
 
+
 /**
- ** print_list - print all elements of the linked list list_t 
- * @h: first node pointer
+ * print_list - print all elements of the linked list list_t 
+ * @h:first node pointer
  *
- * Return: list size
+ * Return:list size
  */
 size_t print_list(const list_t *h)
 {
@@ -108,14 +109,14 @@ list_t *node_starts_with(list_t *node, char *prefix, char c)
  */
 ssize_t get_node_index(list_t *head, list_t *node)
 {
-	size_t a = 0;
+	size_t i = 0;
 
 	while (head)
 	{
 		if (head == node)
-			return (a);
+			return (i);
 		head = head->next;
-		a++;
+		i++;
 	}
 	return (-1);
 }
